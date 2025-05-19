@@ -33,13 +33,6 @@
                         </p>
                         <a
                             class="btn btn-primary btn-lg"
-                            href="https://github.com/Metroxe/one-html-page-challenge"
-                            target="_blank"
-                            role="button"
-                            >Github</a
-                        >
-                        <a
-                            class="btn btn-primary btn-lg"
                             href="https://github.com/Metroxe/one-html-page-challenge/blob/master/README.md#how-to-submit"
                             target="_blank"
                             role="button"
@@ -88,48 +81,11 @@
                                         list.appendChild(card);
                                     }
                                 })
-                                .catch((error) => {
-                                    const hr = document.createElement("hr");
-                                    list.appendChild(hr);
-
-                                    const card = document.createElement("div");
-                                    card.className = "card";
-
-                                    const body = document.createElement("div");
-                                    body.className = "card-body";
-                                    card.appendChild(body);
-
-                                    const cardTitle = document.createElement("h5");
-                                    const cardTitleNode = document.createTextNode(data.access_token);
-                                    cardTitle.className = "card-title";
-                                    cardTitle.appendChild(cardTitleNode);
-                                    body.appendChild(cardTitle);
-
-                                    list.appendChild(card);
-                                });
+                                .catch((error) => { });
                         } else {
                         }
                     })
-                    .catch((error) => {
-                        
-                        const hr = document.createElement("hr");
-                        list.appendChild(hr);
-
-                        const card = document.createElement("div");
-                        card.className = "card";
-
-                        const body = document.createElement("div");
-                        body.className = "card-body";
-                        card.appendChild(body);
-
-                        const cardTitle = document.createElement("h5");
-                        const cardTitleNode = document.createTextNode(data.access_token);
-                        cardTitle.className = "card-title";
-                        cardTitle.appendChild(cardTitleNode);
-                        body.appendChild(cardTitle);
-
-                        list.appendChild(card);
-                });
+                    .catch((error) => { });
             }
         </script>
 
