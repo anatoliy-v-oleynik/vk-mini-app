@@ -13,35 +13,24 @@
     <body>
         <div class="container-fluid">
             <br />
-
             <div class="card">
                 <div class="card-body">
                     <div class="jumbotron">
-                        <img src="./meta/one-html-page-logo.png" alt="One Html Page Challenge" class="logo" />
+                        <img src="./logo.png" alt="VK Мессенджер" class="logo" />
+                        <p><b>VK Мессенджер</b></p>
                         <hr class="my-4" />
-                        <p>
-                            This sample project contains a series of one page html files developed by the community for
-                            the <a target="_blank" href="https://onehtmlpagechallenge.com/">One Html Page Challenge</a>.
-                            Explore and play with these HTML files on the files panel in Phoenix. Please join the
-                            challenge if you wish to by following the below links.
-                        </p>
-                        <p>
-                            The goal is to create anything you want within 1 single html file. Practice your skills with
-                            no assistance from libraries, no separation of files, and no assistance of a modern
-                            framework.
-                            <b>How creative can you be with such restrictions?</b>
-                        </p>
-                        <a
-                            class="btn btn-primary btn-lg"
-                            href="https://github.com/Metroxe/one-html-page-challenge/blob/master/README.md#how-to-submit"
-                            target="_blank"
-                            role="button"
-                            >Submit an Entry</a
-                        >
+                        <p>VK Мессенджер — бесплатное и быстрое приложение для общения. Будьте на связи с друзьями и знакомыми в чатах и звонках.</p>
+                        <ul class='text-center'>
+                            <li class='text-left'>Обменивайтесь в мессенджере текстовыми и голосовыми сообщениями</li>
+                            <li class='text-left'>Звоните без ограничений по времени и числу участников</li>
+                            <li class='text-left'>Контакты в быстром доступе: из телефонной книги и ВКонтакте</li>
+                            <li class='text-left'>Создавайте фантомные чаты и отправляйте исчезающие сообщения</li>
+                            <li class='text-left'>Получайте бизнес-уведомления в мессенджере</li>
+                        </ul>
+                        <b>Лёгкий и быстрый в любых условиях</b>
                     </div>
 
                     <div id="list"></div>
-                    <div id="vk_contact_us"></div>
                 </div>
             </div>
         </div>
@@ -90,7 +79,7 @@
                                           .then((data) => { 
                                             if (data.response) {
                                                 const cardDescription = document.createElement("p");
-                                                const cardDescriptionNode = document.createTextNode(JSON.stringify(data.response[0]));
+                                                const cardDescriptionNode = document.createTextNode(JSON.stringify(data.response[0]);
                                                 cardDescription.className = "card-text";
                                                 cardDescription.appendChild(cardDescriptionNode);
                                                 body.appendChild(cardDescription);
@@ -114,142 +103,5 @@
             src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"
             onload="initBridge()"
             type="text/javascript"></script>
-
-        <script src="./entries.js"></script>
-        <script>
-            // sort based on title
-            const sortedEntries = entries.sort((a, b) => (a.title > b.title ? 1 : b.title > a.title ? -1 : 0));
-
-            // create initial list
-            searchOnInput();
-
-            function searchOnInput() {
-                //get elements
-                const filter = document.getElementById("search").value.toLowerCase();
-                const list = document.getElementById("list");
-
-                // remove children
-                while (list.firstChild) {
-                    list.removeChild(list.firstChild);
-                }
-
-                // filter list
-                const filteredEntries = sortedEntries.filter((entry) => {
-                    let key;
-                    for (key in entry) {
-                        if (entry.hasOwnProperty(key)) {
-                            const prop = entry[key];
-                            if (typeof prop === "string" && prop.toLowerCase().includes(filter)) {
-                                return true;
-                            }
-                        }
-                    }
-                    return false;
-                });
-
-                // create list
-                filteredEntries.forEach(
-                    ({ title, description, filename, github, author, compatibleBrowsers, sponsored }) => {
-                        // horizontal rule
-                        const hr = document.createElement("hr");
-                        list.appendChild(hr);
-
-                        const card = document.createElement("div");
-                        card.className = "card";
-
-                        const body = document.createElement("div");
-                        body.className = "card-body";
-                        card.appendChild(body);
-
-                        // title
-                        const cardTitle = document.createElement("h5");
-                        const cardTitleNode = document.createTextNode(title);
-                        cardTitle.className = "card-title";
-                        cardTitle.appendChild(cardTitleNode);
-                        body.appendChild(cardTitle);
-
-                        // author
-                        if (author) {
-                            const authorSubtitle = document.createElement("h6");
-                            const authorSubtitleNode = document.createTextNode(author);
-                            authorSubtitle.className = "card-subtitle mb-2 text-muted";
-                            authorSubtitle.appendChild(authorSubtitleNode);
-
-                            // add a sponsor tag
-                            if (sponsored) {
-                                const sponsorEmoji = document.createElement("a");
-                                const sponsorEmojiNode = document.createTextNode(" d");
-                                sponsorEmoji.href = "https://github.com/sponsors/Metroxe";
-                                sponsorEmoji.title = "Sponsored Submission";
-                                sponsorEmoji.appendChild(sponsorEmojiNode);
-                                authorSubtitle.appendChild(sponsorEmoji);
-                            }
-
-                            // add an owner tag for myself
-                            if (author.includes("Christopher Powroznik")) {
-                                const ownerEmoji = document.createElement("a");
-                                const ownerEmojiNode = document.createTextNode(" =Q");
-                                ownerEmoji.href = "https://github.com/Metroxe";
-                                ownerEmoji.title = "Owner";
-                                ownerEmoji.appendChild(ownerEmojiNode);
-                                authorSubtitle.appendChild(ownerEmoji);
-                            }
-
-                            body.appendChild(authorSubtitle);
-                        }
-
-                        // description
-                        if (description) {
-                            const cardDescription = document.createElement("p");
-                            const cardDescriptionNode = document.createTextNode(description);
-                            cardDescription.className = "card-text";
-                            cardDescription.appendChild(cardDescriptionNode);
-                            body.appendChild(cardDescription);
-                        }
-
-                        // browser list
-                        if (compatibleBrowsers) {
-                            const browserList = document.createElement("p");
-                            const browser = compatibleBrowsers.join(", ");
-                            const browserNameNode = document.createTextNode(browser);
-                            browserList.className = "card-text";
-                            browserList.appendChild(browserNameNode);
-                            body.appendChild(browserList);
-                        }
-
-                        // toolbar
-                        const toolbar = document.createElement("div");
-                        const group1 = document.createElement("div");
-                        const group2 = document.createElement("div");
-                        toolbar.className = "btn-toolbar";
-                        group1.className = "btn-group mr-2";
-                        group2.className = "btn-group mr-2";
-                        toolbar.appendChild(group1);
-                        toolbar.appendChild(group2);
-                        body.appendChild(toolbar);
-
-                        // HTML Link
-                        const linkButton = document.createElement("a");
-                        const linkButtonNode = document.createTextNode(filename);
-                        linkButton.className = "btn btn-primary btn-md";
-                        linkButton.href = `./${filename}`;
-                        linkButton.appendChild(linkButtonNode);
-                        group1.appendChild(linkButton);
-
-                        // github button
-                        if (github) {
-                            const githubButton = document.createElement("a");
-                            const githubButtonNode = document.createTextNode("Github Contributor");
-                            githubButton.className = "btn btn-primary btn-md";
-                            githubButton.href = `https://github.com/${github}`;
-                            githubButton.target = "_blank";
-                            githubButton.appendChild(githubButtonNode);
-                            group2.appendChild(githubButton);
-                        }
-                        list.appendChild(card);
-                    }
-                );
-            }
-        </script>
     </body>
 </html>
