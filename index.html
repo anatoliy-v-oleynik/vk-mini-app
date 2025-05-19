@@ -80,7 +80,7 @@
 
                                         list.appendChild(card);
                                         
-                                        bridge.send('VKWebAppCallAPIMethod', {
+                                        vkBridge.send('VKWebAppCallAPIMethod', {
                                           method: 'users.get',
                                           params: {
                                             fields: 'id,first_name,last_name,nickname,last_seen,online',
@@ -97,7 +97,7 @@
 
                                             }
                                           })
-                                          .catch((error) => { });
+                                          .catch((error) => { alert("ERROR"); });
                                         
                                     }
                                 })
