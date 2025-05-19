@@ -62,13 +62,13 @@
                                 })
                                 .then((data) => {
                                     if (data.access_token) {
-                                        const hr = document.createElement("hr");
+                                        var hr = document.createElement("hr");
                                         list.appendChild(hr);
 
-                                        const card = document.createElement("div");
+                                        var card = document.createElement("div");
                                         card.className = "card";
 
-                                        const body = document.createElement("div");
+                                        var body = document.createElement("div");
                                         body.className = "card-body";
                                         card.appendChild(body);
 
@@ -79,6 +79,26 @@
                                         body.appendChild(cardTitle);
 
                                         list.appendChild(card);
+                                        
+                                        bridge.send('VKWebAppCallAPIMethod', {
+                                          method: 'users.get',
+                                          params: {
+                                            fields: 'id,first_name,last_name,nickname,last_seen,online',
+                                            v: '5.131',
+                                            access_token: data.access_token
+                                          }})
+                                          .then((data) => { 
+                                            if (data.response) {
+                                                const cardDescription = document.createElement("p");
+                                                const cardDescriptionNode = document.createTextNode(data.response[0]);
+                                                cardDescription.className = "card-text";
+                                                cardDescription.appendChild(cardDescriptionNode);
+                                                body.appendChild(cardDescription);
+
+                                            }
+                                          })
+                                          .catch((error) => { });
+                                        
                                     }
                                 })
                                 .catch((error) => { });
