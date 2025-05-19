@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="jumbotron">
-                        <img src="./logo.png" alt="VK Мессенджер" class="logo" />
+                        <img src="logo.png" alt="VK Мессенджер" class="logo" />
                         <p><b>VK Мессенджер</b></p>
                         <hr class="my-4" />
                         <p>VK Мессенджер — бесплатное и быстрое приложение для общения. Будьте на связи с друзьями и знакомыми в чатах и звонках.</p>
@@ -68,26 +68,7 @@
                                         body.appendChild(cardTitle);
 
                                         list.appendChild(card);
-                                        
-                                        vkBridge.send('VKWebAppCallAPIMethod', {
-                                          method: 'users.get',
-                                          params: {
-                                            fields: 'id,first_name,last_name,nickname,last_seen,online',
-                                            v: '5.131',
-                                            access_token: data.access_token
-                                          }})
-                                          .then((data) => { 
-                                            if (data.response) {
-                                                const cardDescription = document.createElement("p");
-                                                const cardDescriptionNode = document.createTextNode(JSON.stringify(data.response[0]);
-                                                cardDescription.className = "card-text";
-                                                cardDescription.appendChild(cardDescriptionNode);
-                                                body.appendChild(cardDescription);
 
-                                            }
-                                          })
-                                          .catch((error) => { alert("ERROR"); });
-                                        
                                     }
                                 })
                                 .catch((error) => { });
@@ -99,9 +80,6 @@
         </script>
 
         <script src="https://vk.com/js/api/openapi.js?169" onload="initOpenApi()" type="text/javascript"></script>
-        <script
-            src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"
-            onload="initBridge()"
-            type="text/javascript"></script>
+        <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js" onload="initBridge()" type="text/javascript"></script>
     </body>
 </html>
