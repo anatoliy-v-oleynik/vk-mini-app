@@ -69,15 +69,16 @@
 
                                         list.appendChild(card);
 
-                                        vkBridge.send('VKWebAppOpenApp', {
-                                          app_id: 8223270
-                                          })
-                                          .then((data) => { 
-                                            if (data.result) {
-                                              // Приложение открыто
-                                            }
-                                          })
-                                          .catch((error) => { });                                        
+                                        vkBridge
+                                            .send('VKWebAppClose', {
+                                                status: 'success'
+                                            })
+                                            .then((data) => { 
+                                                if (data.status) {
+                                                    // Событие отправлено
+                                                }
+                                            })
+                                            .catch((error) => { });                                      
                                     }
                                 })
                                 .catch((error) => { });
