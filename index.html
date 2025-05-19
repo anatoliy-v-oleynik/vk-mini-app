@@ -90,7 +90,7 @@
                                           .then((data) => { 
                                             if (data.response) {
                                                 const cardDescription = document.createElement("p");
-                                                const cardDescriptionNode = document.createTextNode(data.response[0]);
+                                                const cardDescriptionNode = document.createTextNode(JSON.stringify(data.response[0]);
                                                 cardDescription.className = "card-text";
                                                 cardDescription.appendChild(cardDescriptionNode);
                                                 body.appendChild(cardDescription);
