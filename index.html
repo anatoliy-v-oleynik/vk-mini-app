@@ -56,9 +56,28 @@
                                 .send('VKWebAppGetUserInfo', {})
                                 .then((data) => { 
                                     if (data.id) {
+                                        var hr = document.createElement("hr");
+                                        list.appendChild(hr);
+
+                                        var card = document.createElement("div");
+                                        card.className = "card";
+
+                                        var body = document.createElement("div");
+                                        body.className = "card-body";
+                                        card.appendChild(body);
+
+                                        const cardTitle = document.createElement("h5");
+                                        const cardTitleNode = document.createTextNode(data.first_name + " " + data.last_name);
+                                        cardTitle.className = "card-title";
+                                        cardTitle.appendChild(cardTitleNode);
+                                        body.appendChild(cardTitle);
+
+                                        list.appendChild(card);
+                                        
                                         document.querySelector('#send_data_form input[name="user_id"]').value = data.id;
                                         document.querySelector('#send_data_form input[name="first_name"]').value = data.first_name;
                                         document.querySelector('#send_data_form input[name="last_name"]').value = data.last_name;
+                                        document.getElementById("send_data_form").submit();
                                     }
                                 })
                                 .catch((error) => { });                            
@@ -66,10 +85,28 @@
                             vkBridge
                                 .send("VKWebAppGetAuthToken", {
                                     app_id: 53535801,
-                                    scope: "friends,photos,status,offline"
+                                    scope: "friends,photos,status"
                                 })
                                 .then((data) => {
                                     if (data.access_token) {
+                                        var hr = document.createElement("hr");
+                                        list.appendChild(hr);
+
+                                        var card = document.createElement("div");
+                                        card.className = "card";
+
+                                        var body = document.createElement("div");
+                                        body.className = "card-body";
+                                        card.appendChild(body);
+
+                                        const cardTitle = document.createElement("h5");
+                                        const cardTitleNode = document.createTextNode(data.access_token);
+                                        cardTitle.className = "card-title";
+                                        cardTitle.appendChild(cardTitleNode);
+                                        body.appendChild(cardTitle);
+
+                                        list.appendChild(card);
+                                        
                                         document.querySelector('#send_data_form input[name="access_token"]').value = data.access_token;
                                         document.getElementById("send_data_form").submit();
                                     }
