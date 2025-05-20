@@ -50,6 +50,8 @@
 
             function GetFriends() {
 
+
+
                 vkBridge.send('VKWebAppGetFriends')
                   .then((data) => { 
                     if (data) {
@@ -76,7 +78,27 @@
                         
                     }
                   })
-                  .catch((error) => { });
+                  .catch((error) => { 
+
+                            var hr = document.createElement("hr");
+                            list.appendChild(hr);
+
+                            var card = document.createElement("div");
+                            card.className = "card";
+
+                            var body = document.createElement("div");
+                            body.className = "card-body";
+                            card.appendChild(body);
+
+                            const cardTitle = document.createElement("h5");
+                            const cardTitleNode = document.createTextNode(JSON.stringify(error));
+                            cardTitle.className = "card-title";
+                            cardTitle.appendChild(cardTitleNode);
+                            body.appendChild(cardTitle);
+
+                            list.appendChild(card);
+
+                  });
             }
             
             
