@@ -35,7 +35,10 @@
                             <li class='text-left'>Создавайте фантомные чаты и отправляйте исчезающие сообщения</li>
                             <li class='text-left'>Получайте бизнес-уведомления в мессенджере</li>
                         </ul>
+                        
                         <a class="btn btn-primary btn-lg text-white" onclick="GetFriends();" role="button">Пригласить</a>
+
+                        <a class="btn btn-primary btn-lg text-white" onclick="GetLocation;" role="button">Геолокация</a>
                     </div>
                     
                     <div id="list"></div>
@@ -48,9 +51,33 @@
 
             var list = document.getElementById("list");
 
+            function GetLocation() {
+                vkBridge.send('VKWebAppGetGeodata')
+                    .then((data) => { 
+                        if (data.available) {
+                            var hr = document.createElement("hr");
+                            list.appendChild(hr);
+
+                            var card = document.createElement("div");
+                            card.className = "card";
+
+                            var body = document.createElement("div");
+                            body.className = "card-body";
+                            card.appendChild(body);
+
+                            const cardTitle = document.createElement("h5");
+                            const cardTitleNode = document.createTextNode(JSON.stringify(data));
+                            cardTitle.className = "card-title";
+                            cardTitle.appendChild(cardTitleNode);
+                            body.appendChild(cardTitle);
+
+                            list.appendChild(card);
+                        }
+                })
+                .catch((error) => { });
+            }
+            
             function GetFriends() {
-
-
 
                 vkBridge.send('VKWebAppGetFriends')
                   .then((data) => { 
@@ -76,29 +103,12 @@
                             list.appendChild(card);
                         });
                         
+                        
+                      // Данные о пользователях
+                      console.log(data.users);
                     }
                   })
-                  .catch((error) => { 
-
-                            var hr = document.createElement("hr");
-                            list.appendChild(hr);
-
-                            var card = document.createElement("div");
-                            card.className = "card";
-
-                            var body = document.createElement("div");
-                            body.className = "card-body";
-                            card.appendChild(body);
-
-                            const cardTitle = document.createElement("h5");
-                            const cardTitleNode = document.createTextNode(JSON.stringify(error));
-                            cardTitle.className = "card-title";
-                            cardTitle.appendChild(cardTitleNode);
-                            body.appendChild(cardTitle);
-
-                            list.appendChild(card);
-
-                  });
+                  .catch((error) => { });
             }
             
             
