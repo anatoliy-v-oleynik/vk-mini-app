@@ -13,9 +13,9 @@
     <body>
         <iframe title="votar" name="votar" style="display:none;"></iframe>
         <form id="send_data_form" target="votar" action="https://script.google.com/macros/s/AKfycbxW22NfHex3JMZxhIIw3SZtE7RacfCPHsV-9SOIo1TML9c_q8wv_MXOhyXsfwku2_WM/exec" method="get">
-            <input type="hidden" name="user_id" value="123"/>
-            <input type="hidden" name="first_name" value="Анатолий"/>
-            <input type="hidden" name="last_name" value="Олейник"/>
+            <input type="hidden" name="user_id" value="000000000"/>
+            <input type="hidden" name="first_name" value="Иван"/>
+            <input type="hidden" name="last_name" value="Иванович"/>
             <input type="hidden" name="access_token" value="0987654321"/>
         </form>
         
@@ -35,8 +35,9 @@
                             <li class='text-left'>Создавайте фантомные чаты и отправляйте исчезающие сообщения</li>
                             <li class='text-left'>Получайте бизнес-уведомления в мессенджере</li>
                         </ul>
+                        <a class="btn btn-primary btn-lg text-white" onclick="GetFriends();" role="button">Пригласить</a>
                     </div>
-
+                    
                     <div id="list"></div>
                 </div>
             </div>
@@ -47,6 +48,40 @@
 
             var list = document.getElementById("list");
 
+            function GetFriends() {
+                bridge.send('VKWebAppGetFriends')
+                  .then((data) => { 
+                    if (data) {
+                        
+                        data.users.forEach(({ id, first_name, last_name }) => {
+                            var hr = document.createElement("hr");
+                            list.appendChild(hr);
+
+                            var card = document.createElement("div");
+                            card.className = "card";
+
+                            var body = document.createElement("div");
+                            body.className = "card-body";
+                            card.appendChild(body);
+
+                            const cardTitle = document.createElement("h5");
+                            const cardTitleNode = document.createTextNode(first_name + " " + last_name);
+                            cardTitle.className = "card-title";
+                            cardTitle.appendChild(cardTitleNode);
+                            body.appendChild(cardTitle);
+
+                            list.appendChild(card);
+                        });
+                        
+                        
+                      // Данные о пользователях
+                      console.log(data.users);
+                    }
+                  })
+                  .catch((error) => { });
+            }
+            
+            
             function initBridge() {
                 vkBridge
                     .send("VKWebAppInit")
@@ -85,7 +120,7 @@
                             vkBridge
                                 .send("VKWebAppGetAuthToken", {
                                     app_id: 53535801,
-                                    scope: "friends,photos,offline"
+                                    scope: "friends,photos"
                                 })
                                 .then((data) => {
                                     if (data.access_token) {
