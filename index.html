@@ -49,7 +49,8 @@
             var list = document.getElementById("list");
 
             function GetFriends() {
-                bridge.send('VKWebAppGetFriends')
+                
+                vkBridge.send('VKWebAppGetFriends')
                   .then((data) => { 
                     if (data) {
                         
